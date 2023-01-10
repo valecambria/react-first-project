@@ -1,25 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
+import { useContext, useEffect} from 'react';
+import './index.css';
+import BookCreate from './components/BookCreate'
+import BookList from './components/BookList'
+import BooksContext from './context/books';
+function App(){
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    const {fetchBooks} = useContext(BooksContext)
+
+    useEffect(() => {
+        fetchBooks();
+    }, []) //It gets called once , after the first render and it's never called again.
+    //Instead, if i don't type anything , it will be called always after being rendered.
+    //But if i use [] with an element (or elements) inside, it will be called only if that element (or elements are) it's being modified.
+
+    return (
+    <div>
+        <BookCreate></BookCreate>
+        <BookList/>
     </div>
-  );
-}
+    )
 
+}
 export default App;
