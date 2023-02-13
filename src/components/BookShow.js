@@ -1,9 +1,9 @@
-import { useState, useContext } from 'react'
-import BooksContext from '../context/books'
+import { useState } from 'react'
+import useBooksContext from '../hooks/useBooksContext'
 import BookEdit from './BookEdit'
 function BookShow({book}){
     const [showEdit, setShowEdit] = useState(false)
-    const { deleteBookById } = useContext(BooksContext)
+    const { deleteBookById } = useBooksContext()
     const handleDeleteClick = () => {
         deleteBookById(book.id)
     }
@@ -18,7 +18,7 @@ function BookShow({book}){
         content = <BookEdit onSubmit={handleSubmit} book={book}></BookEdit>
     }
     return(
-        <div className="card card-compact bg-red-300 w-96 bg-base-100 shadow-xl">
+        <div className="card card-compact bg-red-300 w-96 shadow-xl">
             <figure><img src={`https://picsum.photos/seed/${book.id}/300/200`} alt="books" /></figure>
             <div className='flex justify-end mr-2 mt-2'>
             <button className="btn btn-xs" onClick={handleEditClick}>Edit</button>

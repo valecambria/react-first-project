@@ -6,10 +6,11 @@ const BooksContext = createContext()
 function Provider ({children}) {
     const [books, setBooks] = useState([]);
 
-    const fetchBooks = async () => {
+    const fetchBooks = useCallback(async () => {
         const response = await axios.get('http://localhost:3001/books')
         setBooks(response.data)
-    }
+    }, [])
+    
 
     const editBookById = async (id, newTitle) => {
         await axios.put(`http://localhost:3001/books/${id}`, {
@@ -34,7 +35,7 @@ function Provider ({children}) {
         const response = await axios.post('http://localhost:3001/books',{
             title: title
         })
-        console.log(response);
+
         const updatedBooks = [
             ...books,
             response.data
@@ -50,7 +51,10 @@ function Provider ({children}) {
         fetchBooks
     }
 
-    return <BooksContext.Provider value={valueToShare}>{children}</BooksContext.Provider>
+    return( <BooksContext.Provider value={valueToShare}>
+        {children}
+        </BooksContext.Provider>
+        )
 }
-export {Provider}
+export { Provider }
 export default BooksContext
